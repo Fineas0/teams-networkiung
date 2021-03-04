@@ -1,0 +1,8 @@
+#list{
+    background-color:rgb(59, 168, 231);
+}
+#list th{
+    color: white;
+    background-color: #00aeef;
+    padding: 5px;
+}
