@@ -1,8 +1,12 @@
 #list{
-    background-color:rgb(59, 168, 231);
+    background-color:#5087ce;
+    color: #ffd000;
+    margin: 0px;
+    padding: 0px;
 }
 #list th{
-    color: white;
-    background-color: #00aeef;
+    color: #006eff;
+    background-color: #eeca28;
     padding: 5px;
+    margin: 0;
 }
