@@ -6,7 +6,10 @@ function getHtmlTeams(teams) {
             <td>${team.members}</td>
             <td>${team.name}</td>
             <td>${team.url}</td>
-            <td>✖ ✎</td>
+            <td>
+                <a href="#" class="remove-btn" data-id="${team.id}">&#10006;</a>
+                <a href="#" class="edit-btn">&#9998;</a>
+            </td>
         </tr>`
     }).join("")
 }
@@ -40,6 +43,16 @@ function addTeam(team) {
         });
 }
 
+function removeTeam(id) {
+    fetch("http://localhost:3000/teams-json/delete", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: id })
+    });
+}
+
 function saveTeam() {
     const members = document.querySelector("input[name=members]").value;
     const name = document.querySelector("input[name=name]").value;
@@ -53,3 +66,10 @@ function saveTeam() {
 
     addTeam(team);
 }
+
+document.querySelector("table tbody").addEventListener("click", e => {
+    if (e.target.matches("a.remove-btn")){
+        const id = e.target.getAttribute('data-id');
+        removeTeam(id)
+    }
+})
