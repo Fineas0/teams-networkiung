@@ -89,10 +89,15 @@ function saveTeam() {
 document.querySelector("table tbody").addEventListener("click", e => {
     if (e.target.matches("a.remove-btn")) {
         const id = e.target.getAttribute('data-id');
-        removeTeam(id)
+        removeTeam(id);
     }
     else if (e.target.matches("a.edit-btn")) {
         const id = e.target.getAttribute('data-id');
         console.warn("edit", id);
+
+        const editTeam = allTeams.find(team => {
+            return team.id == id;
+        });
+        console.warn("edit", editTeam)
     }
-})
+});
