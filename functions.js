@@ -1,4 +1,5 @@
 let allTeams = [];
+let editId;
 
 function getHtmlTeams(teams) {
     return teams.map(team => {
@@ -55,6 +56,23 @@ function addTeam(team) {
         });
 }
 
+function updateTeam(team) {
+    console.warn("save team", JSON.stringify(team))
+    fetch("http://localhost:3000/teams-json/update", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(team)
+    })
+        .then(r => r.json())
+        .then(status => {
+            if (status.success) {
+                window.location.reload()
+            }
+        });
+}
+
 function removeTeam(id) {
     fetch("http://localhost:3000/teams-json/delete", {
         method: "DELETE",
@@ -82,8 +100,14 @@ function saveTeam() {
         members: members,
         url: url
     };
-
-    addTeam(team);
+    console.warn(team, editId)
+    if (editId) {
+        team.id = editId;
+        console.warn("update", team, editId)
+        updateTeam(team);
+    } else {
+        addTeam(team);
+    }
 }
 
 document.querySelector("table tbody").addEventListener("click", e => {
@@ -92,11 +116,13 @@ document.querySelector("table tbody").addEventListener("click", e => {
         removeTeam(id);
     }
     else if (e.target.matches("a.edit-btn")) {
-        const id = e.target.getAttribute('data-id');
-        console.warn("edit", id);
+        document.getElementById("saveBtn").innerText = "Update"
 
+
+        const id = e.target.getAttribute('data-id');
         const editTeam = allTeams.find(team => team.id == id);
         setValues(editTeam);
+        editId = id;
     }
 });
 
