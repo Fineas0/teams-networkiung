@@ -95,9 +95,14 @@ document.querySelector("table tbody").addEventListener("click", e => {
         const id = e.target.getAttribute('data-id');
         console.warn("edit", id);
 
-        const editTeam = allTeams.find(team => {
-            return team.id == id;
-        });
-        console.warn("edit", editTeam)
+        const editTeam = allTeams.find(team => team.id == id);
+        setValues(editTeam);
     }
 });
+
+function setValues(team) {
+    console.warn("edit", team)
+    document.querySelector("input[name=members]").value = team.members;
+    document.querySelector("input[name=name]").value = team.name;
+    document.querySelector("input[name=url]").value = team.url;
+};
